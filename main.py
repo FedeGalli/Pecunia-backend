@@ -1,5 +1,3 @@
-import logging
-import datetime
 import json
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
