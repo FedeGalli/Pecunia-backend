@@ -54,10 +54,13 @@ async def create_item(item: InsertEntryBody):
     else:
         sheet, SAMPLE_SPREADSHEET_ID = sheetCarolina, SAMPLE_SPREADSHEET_ID_CAROLINA
     
+    try:
     #updating the value
-    sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, 
-        range= "DB!A1" , valueInputOption="USER_ENTERED", body={"values":[[item.type, item.category, item.timestamp, item.amount]]}).execute()
-
+        sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, 
+            range= "DB!A1" , valueInputOption="USER_ENTERED", body={"values":[[item.type, item.category, item.timestamp, item.amount]]}).execute()
+    except e:
+        return Exception(e)
+    return '200'
 
 @app.post("/delete_entry/")
 async def create_item(item: DeleteEntryBody):
@@ -83,7 +86,11 @@ async def create_item(item: DeleteEntryBody):
         ]
     }
 
-    sheet.batchUpdate(
-        spreadsheetId=SAMPLE_SPREADSHEET_ID,
-        body=request_body
-    ).execute()
+    try:
+        sheet.batchUpdate(
+            spreadsheetId=SAMPLE_SPREADSHEET_ID,
+            body=request_body
+        ).execute()
+    except e:
+        return Exception(e)
+    return '200'
