@@ -65,9 +65,9 @@ async def create_item(item: InsertEntryBody):
 @app.post("/delete_entry/")
 async def create_item(item: DeleteEntryBody):
     if (item.user == "Federico"):
-        sheet, SAMPLE_SPREADSHEET_ID = sheetFederico, SAMPLE_SPREADSHEET_ID_FEDERICO
+        sheet, SAMPLE_SPREADSHEET_ID, offset = sheetFederico, SAMPLE_SPREADSHEET_ID_FEDERICO, 270
     else:
-        sheet, SAMPLE_SPREADSHEET_ID = sheetCarolina, SAMPLE_SPREADSHEET_ID_CAROLINA
+        sheet, SAMPLE_SPREADSHEET_ID, offset = sheetCarolina, SAMPLE_SPREADSHEET_ID_CAROLINA, 42
 
     #deleting index row
     request_body = {
@@ -77,8 +77,8 @@ async def create_item(item: DeleteEntryBody):
                     'range': {
                         'sheetId' : '999176741',
                         'dimension': 'ROWS',
-                        'startIndex': int(item.index) - 1,
-                        'endIndex': int(item.index)
+                        'startIndex': int(item.index) + offset - 1,
+                        'endIndex': int(item.index) + offset
                     }
 
                 }
