@@ -65,9 +65,9 @@ async def create_item(item: InsertEntryBody):
 @app.post("/delete_entry/")
 async def create_item(item: DeleteEntryBody):
     if (item.user == "Federico"):
-        sheet, SAMPLE_SPREADSHEET_ID, offset = sheetFederico, SAMPLE_SPREADSHEET_ID_FEDERICO, 270
+        sheet, SAMPLE_SPREADSHEET_ID, offset = sheetFederico, SAMPLE_SPREADSHEET_ID_FEDERICO, 272 #offset is the last compiled line in the sheet "db" 
     else:
-        sheet, SAMPLE_SPREADSHEET_ID, offset = sheetCarolina, SAMPLE_SPREADSHEET_ID_CAROLINA, 42
+        sheet, SAMPLE_SPREADSHEET_ID, offset = sheetCarolina, SAMPLE_SPREADSHEET_ID_CAROLINA, 42 #offset is the last compiled line in the sheet "db" 
 
     #deleting index row
     request_body = {
