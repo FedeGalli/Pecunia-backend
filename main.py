@@ -4,7 +4,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google.oauth2 import service_account
-from datetime import date
+from datetime import datetime
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -14,6 +14,7 @@ class InsertEntryBody(BaseModel):
     category: str
     timestamp: str
     amount: float
+    description: str
 
 class DeleteEntryBody(BaseModel):
     user: str
@@ -56,8 +57,10 @@ async def create_item(item: InsertEntryBody):
     
     try:
     #updating the value
+        month = str(datetime.strptime(item.timestamp, "%d/%m/%Y").strftime("%b")) #month name
+
         sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID, 
-            range= "DB!A1" , valueInputOption="USER_ENTERED", body={"values":[[item.type, item.category, item.timestamp, item.amount]]}).execute()
+            range= "DB!A1" , valueInputOption="USER_ENTERED", body={"values":[[item.type, item.category, item.timestamp, item.amount, item.description, month]]}).execute()
     except e:
         return Exception(e)
     return '200'
